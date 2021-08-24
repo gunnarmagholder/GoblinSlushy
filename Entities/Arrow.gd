@@ -8,8 +8,7 @@ func _ready():
 
 func _process(delta):
 	var velocity = get_linear_velocity()
-	rotation = atan2(velocity.x, velocity.y) * -1
-	print(rotation)
+	rotation = (atan2(velocity.x, velocity.y) * -1) + 46
 
 func SelfDestruct():
 	yield(get_tree().create_timer(self_destruction_seconds), "timeout")
