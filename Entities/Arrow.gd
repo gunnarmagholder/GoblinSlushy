@@ -8,7 +8,7 @@ func _ready():
 
 func _process(delta):
 	var velocity = get_linear_velocity()
-	rotation = atan2(velocity.x, velocity.y)
+	rotation = atan2(velocity.x, velocity.y) * -1
 	print(rotation)
 
 func SelfDestruct():
