@@ -21,8 +21,8 @@ func process_keys(delta):
 		self.position.x -= 1
 	if Input.is_action_pressed("shoot"):
 		arrow_speed += 10
-		if arrow_speed > 600:
-			arrow_speed = 600
+		if arrow_speed > 1000:
+			arrow_speed = 1000
 			$ShotReady.visible = true
 		$ShootForce.rect_size.x = arrow_speed / 10
 			
@@ -30,9 +30,8 @@ func process_keys(delta):
 		can_fire = false
 		var arrow_instance = arrow.instance()
 		arrow_instance.position = $Bow/ShootingPoint.get_global_position()
-		arrow_instance.rotation_degrees = $Bow.rotation_degrees
-		arrow_instance.rotation = $Bow.rotation + 39.7
 		arrow_instance.apply_impulse(Vector2(), Vector2(arrow_speed, 0).rotated($Bow.rotation))
+		arrow_instance.transform = $Bow/ShootingPoint.get_global_transform()
 		get_tree().get_root().add_child(arrow_instance)
 		yield(get_tree().create_timer(arrow_rate), "timeout")
 		can_fire = true

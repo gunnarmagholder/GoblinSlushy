@@ -10,6 +10,7 @@
 extents = Vector2( 72.8459, 117.231 )
 
 [node name="KinematicBody2D" type="KinematicBody2D"]
+position = Vector2( 24.0416, -22.6274 )
 script = ExtResource( 3 )
 
 [node name="ShootForce" type="ColorRect" parent="."]
@@ -23,7 +24,8 @@ __meta__ = {
 }
 
 [node name="ShotReady" type="Sprite" parent="."]
-position = Vector2( -26.9284, -150.416 )
+position = Vector2( -13.4934, -150.416 )
+scale = Vector2( 1.33588, 1 )
 texture = ExtResource( 5 )
 
 [node name="ArcherBody" type="Sprite" parent="."]
