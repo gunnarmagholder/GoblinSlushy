@@ -4,21 +4,31 @@ export var aim_rotation = 0
 export var arrow_speed = 0
 export var arrow_rate = 0.6
 
+const GRAVITY = 200.0
 var arrow = preload("res://Entities/Arrow.tscn")
 var can_fire = true
+var velocity = Vector2.ZERO
+export (int) var speed = 800
+export (int) var jump_speed = -180
+export (int) var gravity = 400
 
 func _ready():
 	$ShotReady.visible = false
 
-
-func _process(delta):
+func _physics_process(delta):
 	process_keys(delta)
+	velocity.y += delta * GRAVITY
+	velocity = move_and_slide(velocity, Vector2.UP)
 
 func process_keys(delta):
+	velocity.x = 0
 	if Input.is_action_pressed("right"):
-		self.position.x += 1
+		velocity.x += speed
 	if Input.is_action_pressed("left"):
-		self.position.x -= 1
+		velocity.x -= speed
+	if Input.is_action_pressed("Jump"):
+		if is_on_floor():
+			velocity.y = jump_speed
 	if Input.is_action_pressed("shoot"):
 		arrow_speed += 10
 		if arrow_speed > 1000:
