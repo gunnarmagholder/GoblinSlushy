@@ -3,6 +3,7 @@ extends KinematicBody2D
 export var aim_rotation = 0
 export var arrow_speed = 0
 export var arrow_rate = 0.6
+export var tension_time = 2
 
 const GRAVITY = 200.0
 var arrow = preload("res://Entities/Arrow.tscn")
@@ -34,20 +35,33 @@ func process_keys(delta):
 		if arrow_speed > 1000:
 			arrow_speed = 1000
 			$ShotReady.visible = true
+			time_out_shot()
 		$ShootForce.rect_size.x = arrow_speed / 10
 			
 	if Input.is_action_just_released("shoot") and can_fire:
 		can_fire = false
-		var arrow_instance = arrow.instance()
-		arrow_instance.position = $Bow/ShootingPoint.get_global_position()
-		arrow_instance.speed = Vector2(arrow_speed, 0).rotated($Bow.rotation)
-		print(arrow_instance.speed)
-#		arrow_instance.apply_impulse(Vector2(), Vector2(arrow_speed, 0).rotated($Bow.rotation))
-#		arrow_instance.transform = $Bow/ShootingPoint.get_global_transform()
-		get_tree().get_root().add_child(arrow_instance)
-		yield(get_tree().create_timer(arrow_rate), "timeout")
-		can_fire = true
-		arrow_speed = 0
-		$ShootForce.rect_size.x = 0
-		$ShotReady.visible = false
+		shoot()
 		
+func time_out_shot():
+	yield(get_tree().create_timer(tension_time), "timeout")
+	if arrow_speed == 1000:
+		cancel_shot()
+	
+func cancel_shot():
+	can_fire = true
+	arrow_speed = 0
+	$ShootForce.rect_size.x = 0
+	$ShotReady.visible = false
+
+func shoot():
+	var arrow_instance = arrow.instance()
+	arrow_instance.position = $Bow/ShootingPoint.get_global_position()
+	arrow_instance.speed = Vector2(arrow_speed, 0).rotated($Bow.rotation)
+	print(arrow_instance.speed)
+	get_tree().get_root().add_child(arrow_instance)
+	yield(get_tree().create_timer(arrow_rate), "timeout")
+	can_fire = true
+	arrow_speed = 0
+	$ShootForce.rect_size.x = 0
+	$ShotReady.visible = false
+	
