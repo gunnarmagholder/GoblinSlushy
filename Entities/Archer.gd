@@ -40,8 +40,10 @@ func process_keys(delta):
 		can_fire = false
 		var arrow_instance = arrow.instance()
 		arrow_instance.position = $Bow/ShootingPoint.get_global_position()
-		arrow_instance.apply_impulse(Vector2(), Vector2(arrow_speed, 0).rotated($Bow.rotation))
-		arrow_instance.transform = $Bow/ShootingPoint.get_global_transform()
+		arrow_instance.speed = Vector2(arrow_speed, 0).rotated($Bow.rotation)
+		print(arrow_instance.speed)
+#		arrow_instance.apply_impulse(Vector2(), Vector2(arrow_speed, 0).rotated($Bow.rotation))
+#		arrow_instance.transform = $Bow/ShootingPoint.get_global_transform()
 		get_tree().get_root().add_child(arrow_instance)
 		yield(get_tree().create_timer(arrow_rate), "timeout")
 		can_fire = true

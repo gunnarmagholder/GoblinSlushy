@@ -4,15 +4,13 @@
 [ext_resource path="res://Entities/Arrow.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 9.87746, 8.70811 )
+extents = Vector2( 7.77527, 7.65706 )
 
-[node name="Arrow" type="RigidBody2D" groups=[
+[node name="Arrow" type="Area2D" groups=[
 "arrow",
 ]]
-mass = 2.6
-gravity_scale = 9.0
-contacts_reported = 10
-contact_monitor = true
+gravity_point = true
+gravity_distance_scale = 0.095
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -23,3 +21,5 @@ offset = Vector2( -46.9797, -2.05431 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0.827301, 0.185425 )
 shape = SubResource( 1 )
+
+[connection signal="body_entered" from="." to="." method="_on_Arrow_body_entered"]
